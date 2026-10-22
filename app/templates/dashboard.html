@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Hi, {{ user.display_name }}</h1>
+  <div class="actions">
+    <a class="btn btn-primary" href="/trips#create-trip">New trip</a>
+    <a class="btn" href="/friends">Find friends</a>
+  </div>
+</div>
+<div class="grid-2">
+  <section class="card" aria-labelledby="dash-trips">
+    <div class="card-head"><h2 id="dash-trips">Your trips</h2><a href="/trips">All trips</a></div>
+    <ul id="dash-trip-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+  <section class="card" aria-labelledby="dash-requests">
+    <div class="card-head"><h2 id="dash-requests">Friend requests</h2><a href="/friends">Friends</a></div>
+    <ul id="dash-request-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/dashboard.js') }}"></script>{% endblock %}

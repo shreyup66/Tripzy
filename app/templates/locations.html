@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% set tab = 'locations' %}
+{% block title %}Locations · {{ trip.name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="crumb"><a href="/trips">Trips</a> / <a href="/trips/{{ trip.id }}">{{ trip.name }}</a> /</p>
+    <h1>Location Suggestions</h1>
+  </div>
+</div>
+{% include "_trip_nav.html" %}
+<section class="card" aria-labelledby="search-heading">
+  <h2 id="search-heading">Find popular places</h2>
+  <form id="place-search-form" class="inline-form" role="search" method="post">
+    <div class="field grow">
+      <label for="place-query">Destination, city or keyword</label>
+      <input id="place-query" name="query" maxlength="200" value="{{ trip.destination }}">
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <div class="geo">
+    <button type="button" class="btn" id="use-location-btn">Use my location</button>
+    <div id="geo-explainer" class="notice" hidden>
+      <p><strong>Why we ask:</strong> Tripzy uses your current location once to find popular places near you. It isn't saved. Your browser will ask for permission next.</p>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="geo-continue">Continue</button>
+        <button type="button" class="btn" id="geo-cancel">Not now</button>
+      </div>
+    </div>
+    <p id="geo-message" class="notice notice-warn" role="alert" hidden></p>
+  </div>
+</section>
+<div class="grid-2 grid-wide-left">
+  <section class="card" aria-labelledby="results-heading">
+    <h2 id="results-heading">Suggestions</h2>
+    <p id="results-meta" class="muted"></p>
+    <div id="results" class="place-grid" aria-live="polite"></div>
+  </section>
+  <section class="card" aria-labelledby="saved-places-heading">
+    <h2 id="saved-places-heading">Saved to this trip</h2>
+    <ul id="saved-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.TRIP = {{ {"id": trip.id, "destination": trip.destination} | tojson }};</script>
+<script src="{{ url_for('static', path='js/locations.js') }}"></script>
+{% endblock %}

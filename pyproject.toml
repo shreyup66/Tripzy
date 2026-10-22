@@ -1,0 +1,12 @@
+[project]
+name = "tripzy"
+version = "1.0.0"
+description = "Browser-based trip planner with friends, budget splitting and place suggestions"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["e2e: browser end-to-end tests (need Playwright and a running server)"]
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient`"]

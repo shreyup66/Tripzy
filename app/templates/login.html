@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<section class="card narrow auth-card">
+  <h1>Welcome back</h1>
+  <p class="muted">Log in to plan trips and split costs with friends.</p>
+  <form id="login-form" method="post" novalidate>
+    <div class="form-error" role="alert" hidden></div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Log in</button>
+  </form>
+  <p class="muted center">New to Tripzy? <a href="/signup">Create an account</a></p>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/auth.js') }}"></script>{% endblock %}

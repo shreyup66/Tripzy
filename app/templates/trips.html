@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Trips{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Trips</h1></div>
+<div class="grid-2 grid-wide-left">
+  <section class="card" aria-labelledby="trip-list-heading">
+    <h2 id="trip-list-heading">Your trips</h2>
+    <ul id="trip-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+  <section class="card" id="create-trip" aria-labelledby="create-heading">
+    <h2 id="create-heading">Create a trip</h2>
+    <form id="trip-form" method="post" novalidate>
+      <div class="form-error" role="alert" hidden></div>
+      <div class="field">
+        <label for="trip-name">Trip name</label>
+        <input id="trip-name" name="name" maxlength="120" required placeholder="Goa Weekend">
+      </div>
+      <div class="field">
+        <label for="trip-destination">Destination</label>
+        <input id="trip-destination" name="destination" maxlength="200" required placeholder="North Goa, India">
+      </div>
+      <div class="field">
+        <label for="trip-description">Description <span class="muted">(optional)</span></label>
+        <textarea id="trip-description" name="description" rows="2" maxlength="2000"></textarea>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="trip-start">Start date <span class="muted">(optional)</span></label>
+          <input id="trip-start" name="start_date" type="date">
+        </div>
+        <div class="field">
+          <label for="trip-end">End date <span class="muted">(optional)</span></label>
+          <input id="trip-end" name="end_date" type="date">
+        </div>
+      </div>
+      <fieldset class="field">
+        <legend>Members <span class="muted">(optional)</span></legend>
+        <label for="trip-group">Preselect from a friend group</label>
+        <select id="trip-group"><option value="">— None —</option></select>
+        <div id="trip-member-choices" class="checks"><p class="muted">Add friends first to invite them here.</p></div>
+        <p class="hint">Review the selected friends before creating the trip. You can add more members later.</p>
+      </fieldset>
+      <button class="btn btn-primary btn-block" type="submit">Create trip</button>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/trips.js') }}"></script>{% endblock %}

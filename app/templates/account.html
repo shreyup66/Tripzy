@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Account{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Your account</h1></div>
+<div class="grid-2">
+  <section class="card" aria-labelledby="profile-heading">
+    <h2 id="profile-heading">Profile</h2>
+    <form id="profile-form" method="post" novalidate>
+      <div class="form-error" role="alert" hidden></div>
+      <div class="field"><label for="acc-name">Display name</label><input id="acc-name" name="display_name" maxlength="80" required value="{{ user.display_name }}"></div>
+      <div class="field"><label for="acc-email">Email</label><input id="acc-email" name="email" type="email" required value="{{ user.email }}"></div>
+      <button class="btn btn-primary" type="submit">Save profile</button>
+    </form>
+  </section>
+  <section class="card" aria-labelledby="password-heading">
+    <h2 id="password-heading">Change password</h2>
+    <form id="password-form" method="post" novalidate>
+      <div class="form-error" role="alert" hidden></div>
+      <div class="field"><label for="acc-current">Current password</label><input id="acc-current" name="current_password" type="password" autocomplete="current-password" required></div>
+      <div class="field"><label for="acc-new">New password</label><input id="acc-new" name="new_password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="acc-new-hint"><p class="hint" id="acc-new-hint">At least 8 characters, with a letter and a number.</p></div>
+      <button class="btn btn-primary" type="submit">Change password</button>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/account.js') }}"></script>{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+<section class="card narrow auth-card">
+  <h1>Create your account</h1>
+  <form id="signup-form" method="post" novalidate>
+    <div class="form-error" role="alert" hidden></div>
+    <div class="field">
+      <label for="display_name">Display name</label>
+      <input id="display_name" name="display_name" autocomplete="name" maxlength="80" required>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="pw-hint">
+      <p class="hint" id="pw-hint">At least 8 characters, with a letter and a number.</p>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Sign up</button>
+  </form>
+  <p class="muted center">Already have an account? <a href="/login">Log in</a></p>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/auth.js') }}"></script>{% endblock %}

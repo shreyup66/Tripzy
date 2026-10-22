@@ -1,0 +1,5 @@
+<nav class="tabs" aria-label="Trip sections">
+  <a href="/trips/{{ trip.id }}" {% if tab == 'overview' %}aria-current="page"{% endif %}>Overview</a>
+  <a href="/trips/{{ trip.id }}/budget" {% if tab == 'budget' %}aria-current="page"{% endif %}>Budget Splitter</a>
+  <a href="/trips/{{ trip.id }}/locations" {% if tab == 'locations' %}aria-current="page"{% endif %}>Locations</a>
+</nav>

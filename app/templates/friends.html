@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Friends{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Friends</h1></div>
+<section class="card" aria-labelledby="find-heading">
+  <h2 id="find-heading">Find people</h2>
+  <form id="search-form" class="inline-form" role="search" method="post">
+    <div class="field grow">
+      <label for="search-q">Name or email</label>
+      <input id="search-q" name="q" minlength="2" maxlength="100" required placeholder="e.g. blair@example.com">
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <ul id="search-results" class="list"></ul>
+</section>
+<div class="grid-2">
+  <section class="card" aria-labelledby="incoming-heading">
+    <h2 id="incoming-heading">Incoming requests</h2>
+    <ul id="incoming-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+  <section class="card" aria-labelledby="outgoing-heading">
+    <h2 id="outgoing-heading">Sent requests</h2>
+    <ul id="outgoing-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+</div>
+<section class="card" aria-labelledby="friends-heading">
+  <h2 id="friends-heading">Your friends</h2>
+  <ul id="friend-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/friends.js') }}"></script>{% endblock %}

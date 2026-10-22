@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Friend groups{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Friend groups</h1></div>
+<p class="muted">Groups are reusable lists of friends. They don't add anyone to a trip automatically — you can use a group to preselect trip members when creating a trip.</p>
+<section class="card" aria-labelledby="new-group-heading">
+  <h2 id="new-group-heading">New group</h2>
+  <form id="group-form" class="inline-form" method="post" novalidate>
+    <div class="field grow">
+      <label for="group-name">Group name</label>
+      <input id="group-name" name="name" maxlength="100" required placeholder="e.g. College friends">
+    </div>
+    <button class="btn btn-primary" type="submit">Create group</button>
+  </form>
+</section>
+<div id="group-list" class="stack" aria-busy="true"><p class="muted">Loading…</p></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', path='js/groups.js') }}"></script>{% endblock %}

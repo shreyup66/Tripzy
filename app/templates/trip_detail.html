@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% set tab = 'overview' %}
+{% block title %}{{ trip.name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="crumb"><a href="/trips">Trips</a> /</p>
+    <h1 id="trip-title">{{ trip.name }}</h1>
+    <p class="muted" id="trip-subtitle">{{ trip.destination }}</p>
+  </div>
+</div>
+{% include "_trip_nav.html" %}
+<div class="grid-2">
+  <section class="card" aria-labelledby="details-heading">
+    <h2 id="details-heading">Details</h2>
+    <dl id="trip-details" class="details"></dl>
+    {% if is_owner %}
+    <details class="disclosure">
+      <summary>Edit trip</summary>
+      <form id="edit-trip-form" method="post" novalidate>
+        <div class="form-error" role="alert" hidden></div>
+        <div class="field"><label for="edit-name">Trip name</label><input id="edit-name" name="name" maxlength="120" required></div>
+        <div class="field"><label for="edit-destination">Destination</label><input id="edit-destination" name="destination" maxlength="200" required></div>
+        <div class="field"><label for="edit-description">Description</label><textarea id="edit-description" name="description" rows="2" maxlength="2000"></textarea></div>
+        <div class="row">
+          <div class="field"><label for="edit-start">Start date</label><input id="edit-start" name="start_date" type="date"></div>
+          <div class="field"><label for="edit-end">End date</label><input id="edit-end" name="end_date" type="date"></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+      </form>
+    </details>
+    {% endif %}
+  </section>
+  <section class="card" aria-labelledby="members-heading">
+    <h2 id="members-heading">Members</h2>
+    <ul id="member-list" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+    {% if is_owner %}
+    <form id="add-member-form" method="post" novalidate>
+      <div class="form-error" role="alert" hidden></div>
+      <div class="field">
+        <label for="member-friend">Add Member — choose a friend</label>
+        <select id="member-friend" name="user_id"><option value="">— Choose a friend —</option></select>
+      </div>
+      <div class="field">
+        <label for="member-email">…or enter their Tripzy email</label>
+        <input id="member-email" name="email" type="email" placeholder="friend@example.com">
+      </div>
+      <button class="btn btn-primary" type="submit">Add member</button>
+    </form>
+    {% endif %}
+  </section>
+</div>
+<div class="grid-2">
+  <section class="card" aria-labelledby="budget-heading">
+    <div class="card-head"><h2 id="budget-heading">Budget summary</h2><a href="/trips/{{ trip.id }}/budget">Open Budget Splitter</a></div>
+    <ul id="balance-summary" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+  <section class="card" aria-labelledby="saved-heading">
+    <div class="card-head"><h2 id="saved-heading">Saved locations</h2><a href="/trips/{{ trip.id }}/locations">Find places</a></div>
+    <ul id="saved-summary" class="list" aria-busy="true"><li class="muted">Loading…</li></ul>
+  </section>
+</div>
+{% if is_owner %}
+<section class="card danger-zone" aria-labelledby="settings-heading">
+  <h2 id="settings-heading">Trip settings</h2>
+  <p>Deleting the trip permanently removes its members, expenses and saved locations.</p>
+  <button type="button" class="btn btn-danger" id="delete-trip-btn">Delete trip</button>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>window.TRIP = {{ {"id": trip.id, "isOwner": is_owner} | tojson }};</script>
+<script src="{{ url_for('static', path='js/trip_detail.js') }}"></script>
+{% endblock %}

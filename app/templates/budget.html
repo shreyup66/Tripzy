@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set tab = 'budget' %}
+{% block title %}Budget · {{ trip.name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="crumb"><a href="/trips">Trips</a> / <a href="/trips/{{ trip.id }}">{{ trip.name }}</a> /</p>
+    <h1>Budget Splitter</h1>
+  </div>
+</div>
+{% include "_trip_nav.html" %}
+<p class="muted">Tripzy records who paid and who owes what. It doesn't transfer money.</p>
+<div class="grid-2">
+  <section class="card" aria-labelledby="add-expense-heading">
+    <h2 id="add-expense-heading">Add Expense</h2>
+    <form id="expense-form" method="post" novalidate>
+      <div class="form-error" role="alert" hidden></div>
+      <div class="field">
+        <label for="exp-description">Description</label>
+        <input id="exp-description" name="description" maxlength="200" required placeholder="Dinner">
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="exp-amount">Amount (₹)</label>
+          <input id="exp-amount" name="amount" inputmode="decimal" required placeholder="900.00" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="exp-payer">Paid by</label>
+          <select id="exp-payer" name="payer_id" required></select>
+        </div>
+      </div>
+      <fieldset class="field">
+        <legend>Split</legend>
+        <div class="radio-row">
+          <label><input type="radio" name="split_method" value="equal" checked> Split equally</label>
+          <label><input type="radio" name="split_method" value="custom"> Custom shares</label>
+        </div>
+      </fieldset>
+      <fieldset class="field" aria-describedby="split-status">
+        <legend>Participants</legend>
+        <div class="checks-actions">
+          <button type="button" class="btn-link" id="select-all">Select all</button>
+          <button type="button" class="btn-link" id="select-none">Clear</button>
+        </div>
+        <div id="participants" class="participants"></div>
+        <p id="split-status" class="split-status" aria-live="polite"></p>
+      </fieldset>
+      <button class="btn btn-primary btn-block" type="submit">Save expense</button>
+    </form>
+  </section>
+  <section class="card" aria-labelledby="balances-heading">
+    <h2 id="balances-heading">Balances</h2>
+    <div id="balances" aria-busy="true"><p class="muted">Loading…</p></div>
+    <h3>Who owes whom</h3>
+    <ul id="settlements" class="list"></ul>
+  </section>
+</div>
+<section class="card" aria-labelledby="expenses-heading">
+  <h2 id="expenses-heading">Expenses</h2>
+  <ul id="expense-list" class="list expenses" aria-busy="true"><li class="muted">Loading…</li></ul>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>window.TRIP = {{ {"id": trip.id} | tojson }};</script>
+<script src="{{ url_for('static', path='js/budget.js') }}"></script>
+{% endblock %}
